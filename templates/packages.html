@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">Travel Packages</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active text-white">Packages</li>
+            </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+<!-- Packages Start -->
+<div class="container-fluid packages py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">Packages</h5>
+            <h1 class="mb-0">Awesome Packages</h1>
+        </div>
+        <div class="packages-carousel owl-carousel">
+            {% for i in packages %}
+            <div class="packages-item">
+                <div class="packages-img">
+                    <img src="{{ i.image.url }}" class="img-fluid w-100 rounded-top" alt="Image">
+                    <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute"
+                         style="width: 100%; bottom: 0; left: 0; z-index: 5;">
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ i.title }}</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ i.day }} days</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ i.person }}
+                            Person</small>
+                    </div>
+                    <div class="packages-price py-2 px-4">${{ i.price }}.00</div>
+                </div>
+                <div class="packages-content bg-light">
+                    <div class="p-4 pb-0">
+                        <h5 class="mb-0">{{ i.location }}</h5>
+                        <small class="text-uppercase">{{ i.hotel_name }}</small>
+                        <div class="mb-3">
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                        </div>
+                        <p class="mb-4">{{ i.description }}</p>
+                    </div>
+                    <div class="row bg-primary rounded-bottom mx-0">
+                        <div class="col-6 text-start px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Read More</a>
+                        </div>
+                        <div class="col-6 text-end px-0">
+                            <a href="#" class="btn-hover btn text-white py-2 px-4">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Packages End -->
+
+<!-- Tour Booking Start -->
+<div class="container-fluid booking py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h5 class="section-booking-title pe-3">Booking</h5>
+                <h1 class="text-white mb-4">Online Booking</h1>
+                <p class="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur maxime
+                    ullam esse fuga blanditiis accusantium pariatur quis sapiente, veniam doloribus praesentium?
+                    Repudiandae iste voluptatem fugiat doloribus quasi quo iure officia.
+                </p>
+                <p class="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur maxime
+                    ullam esse fuga blanditiis accusantium pariatur quis sapiente, veniam doloribus praesentium?
+                    Repudiandae iste voluptatem fugiat doloribus quasi quo iure officia.
+                </p>
+                <a href="#" class="btn btn-light text-primary rounded-pill py-3 px-5 mt-2">Read More</a>
+            </div>
+            <div class="col-lg-6">
+                <h1 class="text-white mb-3">Book A Tour Deals</h1>
+                <p class="text-white mb-4">Get <span class="text-warning">50% Off</span> On Your First Adventure Trip
+                    With Travela. Get More Deal Offers Here.</p>
+                <form method="post" class="">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="">
+                                {{ form.full_name }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="">
+                                {{ form.email }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="" id="date3" data-target-input="nearest">
+                                {{ form.data_time }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="">
+                                {{ form.destination }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select bg-white border-0" id="SelectPerson" name="persons">
+                                    {% for choice in form.persons.field.choices %}
+                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="SelectPerson">Persons</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select bg-white border-0" id="CategoriesSelect" name="kids">
+                                    {% for choice in form.kids.field.choices %}
+                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="CategoriesSelect">Kids</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-floating">
+                                {{ form.message }}
+                                <label for="message">Special Request</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary text-white w-100 py-3" type="submit">Book Now</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Tour Booking End -->
+
+<!-- Subscribe Start -->
+<div class="container-fluid subscribe py-5">
+    <div class="container text-center py-5">
+        <div class="mx-auto text-center" style="max-width: 900px;">
+            <h5 class="subscribe-title px-3">Subscribe</h5>
+            <h1 class="text-white mb-4">Our Newsletter</h1>
+            <p class="text-white mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum tempore nam,
+                architecto doloremque velit explicabo? Voluptate sunt eveniet fuga eligendi! Expedita laudantium fugiat
+                corrupti eum cum repellat a laborum quasi.
+            </p>
+            <div class="position-relative mx-auto">
+                <input class="form-control border-primary rounded-pill w-100 py-3 ps-4 pe-5" type="text"
+                       placeholder="Your email">
+                <button type="button"
+                        class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 px-4 mt-2 me-2">Subscribe
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Subscribe End -->
+{% endblock %}
